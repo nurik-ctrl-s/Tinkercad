@@ -1,0 +1,51 @@
+const int trigPin = 12;
+const int echoPin = 10;
+const int buzzerPin = 6;
+
+const int toneFreq = 2000;
+const int maxDistCm = 150; // Откуда начинает подавать звуки (можно поменять, например на 200)
+const int minDistCm = 10;  // Дистанция почти сплошного сигнала
+
+long readDistanceCm() {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  long duration = pulseIn(echoPin, HIGH, 30000);
+  if (duration == 0) {
+    return 999;
+  }
+  return duration * 0.01723;
+}
+
+void setup() {
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(buzzerPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  long dist = readDistanceCm();
+  Serial.print("Distance: ");
+  Serial.println(dist);
+
+  if (dist > maxDistCm) {
+    noTone(buzzerPin);
+    delay(80);
+  } else if (dist <= minDistCm) {
+    tone(buzzerPin, toneFreq);
+    delay(80);
+  } else {
+    // Чем ближе объект, тем короче пауза между сигналами (от 700 мс издалека до 40 мс вблизи)
+    int pauseMs = map(dist, minDistCm, maxDistCm, 40, 700);
+    pauseMs = constrain(pauseMs, 40, 700);
+
+    tone(buzzerPin, toneFreq);
+    delay(80);
+    noTone(buzzerPin);
+    delay(pauseMs);
+  }
+}
