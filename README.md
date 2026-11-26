@@ -7,4 +7,3 @@ lesson 10
 <img width="1433" height="782" alt="image" src="https://github.com/user-attachments/assets/7101aeb2-be1f-45fd-8211-5f626769d06d" />
 lesson 11
 <img width="1467" height="828" alt="image" src="https://github.com/user-attachments/assets/76ac446d-86d1-49a6-bc0a-2134b5b7e061" />
-<img width="1436" height="736" alt="image" src="https://github.com/user-attachments/assets/d5e8a020-bb0f-4229-8962-9c733d57e2b2" />
